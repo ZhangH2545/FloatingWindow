@@ -27,6 +27,7 @@ public class FloatService extends Service {
     private WindowManager windowManager;
     private WindowManager.LayoutParams layoutParams;
     public int statusHeight;
+    public int daohangHeight;
     public int screenWidth;
     public int screenHeight;
     public int middleX;
@@ -45,6 +46,7 @@ public class FloatService extends Service {
     public void onCreate() {
         super.onCreate();
         statusHeight = utils.getStatusBarHeight(this);
+        daohangHeight = utils.getDaoHangHeight(this);
         DisplayMetrics dm = getResources().getDisplayMetrics();
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
@@ -148,8 +150,10 @@ public class FloatService extends Service {
         @Override
         public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
             layoutParams.x = (int) motionEvent1.getRawX() - imageView.getMeasuredWidth() / 2;
-            //减25为状态栏的高度
+            //减为状态栏的高度
             layoutParams.y = (int) motionEvent1.getRawY() - imageView.getMeasuredHeight() / 2 - statusHeight;
+            //减去导航栏跟状态栏高度
+//            layoutParams.y = (int) motionEvent1.getRawY() - imageView.getMeasuredHeight() / 2 - statusHeight - daohangHeight;
             //刷新
             windowManager.updateViewLayout(linearLayout, layoutParams);
             return false;
